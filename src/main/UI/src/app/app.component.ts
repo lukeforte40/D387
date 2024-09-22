@@ -15,6 +15,9 @@ import {map} from "rxjs/operators";
 })
 export class AppComponent implements OnInit{
 
+  welcomeMessageEng$!: Observable<string>
+  welcomeMessageFre$!: Observable<string>
+
   constructor(private httpClient:HttpClient){}
 
   private baseURL:string='http://localhost:8080';
@@ -29,6 +32,11 @@ export class AppComponent implements OnInit{
   currentCheckOutVal!:string;
 
     ngOnInit(){
+      // Call welcome message in different languages to site
+      //English message.  localhost:8080/welcome/?lang=en-us
+      this.welcomeMessageEng$ = this.httpClient.get(this.baseURL + "/welcome/?lang=en-US", {responseType: "text"})
+      //French Message. localhost:8080/welcome/?lang=fr-CA
+      this.welcomeMessageFre$ = this.httpClient.get(this.baseURL + "/welcome/?lang=fr-CA", {responseType: "text"})
       this.roomsearch= new FormGroup({
         checkin: new FormControl(' '),
         checkout: new FormControl(' ')
